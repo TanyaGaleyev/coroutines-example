@@ -40,6 +40,7 @@ fun main(args: Array<String>) {
   reader.readAvailable().printHex()
   reader.source.addBytes(byteArrayOf(1, 2, 3))
   reader.readAvailable().printHex()
+  reader.source.addBytes(byteArrayOf(1))
   reader.readAvailable().printHex()
 }
 

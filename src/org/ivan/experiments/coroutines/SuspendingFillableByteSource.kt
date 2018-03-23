@@ -28,7 +28,10 @@ class SuspendingFillableByteSource {
   private fun read0(): Int {
     val chunk = bytes.first
     val ret = chunk[readerIndex++].toInt()
-    if (readerIndex == chunk.size) bytes.removeFirst()
+    if (readerIndex == chunk.size) {
+      bytes.removeFirst()
+      readerIndex = 0
+    }
     return ret
   }
 
