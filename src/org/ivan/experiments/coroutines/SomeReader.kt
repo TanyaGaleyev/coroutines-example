@@ -8,7 +8,7 @@ import kotlin.coroutines.experimental.startCoroutine
 
 class SomeReader {
   val source = SuspendingFillableByteSource()
-  private val fRead: suspend SuspendingFillableByteSource.() -> Int = { read() }
+  private val fRead: suspend () -> Int = { source.read() }
   private val buf = arrayListOf<Int>()
   private var readSomeBytes = false
   private val cont = object : Continuation<Int> {
@@ -25,7 +25,7 @@ class SomeReader {
   fun readAvailable(): ByteArray {
     do {
       readSomeBytes = false
-      fRead.startCoroutine(source, cont)
+      fRead.startCoroutine(cont)
     } while (readSomeBytes)
     val baos = ByteArrayOutputStream()
     buf.forEach(baos::write)
